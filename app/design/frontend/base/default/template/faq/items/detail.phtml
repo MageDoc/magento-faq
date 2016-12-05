@@ -1,0 +1,61 @@
+<div class="page-title">
+    <h1><?php echo $this->__('FAQ') ?></h1>
+</div>
+
+<?php $category = $this->getCategory() ?>
+<?php $_item = $this->getItem() ?>
+<div class="faq-detail">
+    <div class="page-subtitle">
+        <i class="fa fa-question-circle" style="color:#<?php echo $category->getIconColor() ?>"></i>&nbsp;<?php echo $this->escapeHtml($_item->getQuestion()) ?>
+    </div>
+
+    <div class="page-content">
+        <i class="fa fa-adn"></i>
+        <?php 
+            $helper = Mage::helper('cms');
+            if ($helper) {
+                $processor = $helper->getBlockTemplateProcessor();
+                if ($processor) {
+                    echo $content = $processor->filter($_item->getAnswer());
+                }
+            }
+        ?>
+    </div>
+
+    <?php if(!$this->isFeedback($_item->getId())): ?>
+        <div class="feedback-form">
+            <?php echo $this->__('Was this article helpful?') ?>
+            <div class="feedback-buttons">
+                <a class="button" href="<?php echo $this->getUrl('faq/index/feedback', array('cid' => $category->getCategoryId(), 'id' => $_item->getId())) ?>"><?php echo $this->__('Yes') ?></a>
+                <a class="button button-no" href="<?php echo $this->getUrl('contacts') ?>"><?php echo $this->__('No') ?></a>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div style="text-align:right">
+        <a href="<?php echo $this->getUrl('*/index', array('cid' => $category->getCategoryId())) ?>">
+            <i class="fa fa-arrow-right" aria-hidden="true" style="color:#<?php echo $category->getIconColor()?>"></i> <?php echo $category->getName() ?>
+        </a>
+        <br>
+        <a href="<?php echo $this->getUrl('*/index') ?>">
+            <i class="fa fa-arrow-right" aria-hidden="true" style="color:#<?php echo $category->getIconColor()?>"></i> <?php echo $this->__('FAQ') ?>
+        </a>
+    </div>
+
+    <?php $relatedFaqs = $this->getRelatedFaqs($_item->getRelatedFaq()); var_dump(); ?>
+    <?php if (!empty($relatedFaqs)): ?>
+        <div class="page-subtitle">
+            <i class="fa fa-link" style="color:#<?php echo $category->getIconColor() ?>"></i>&nbsp;<?php echo $this->__('Relation FAQ') ?>
+        </div>
+        <div class="faq-content">
+            <?php foreach($relatedFaqs as $_item): ?>
+                <div class="faq-row">
+                    <i class="fa fa-caret-right" style="color:#<?php echo $category->getIconColor(); ?>"></i>
+                    <a href="<?php echo $this->getUrl('faq/index/detail', array('cid' => $_item->getCategoryId(), 'id' => $_item->getId())) ?>">
+                        <span><?php echo $this->escapeHtml($_item->getQuestion()) ?></span>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif;?>
+</div>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <faq_index translate="label">
+        <label>FAQ</label>
+        <remove name="right"/>
+
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/font-awesome.css</name><params/></action>
+            <action method="addItem"><type>skin_css</type><name>css/styles-faq.css</name><params/></action>
+        </reference>
+
+        <reference name="left">
+            <block type="faq/category" name="faq_left_category" before="-" >
+                <action method="setTemplate">
+                    <template>faq/category.phtml</template>
+                </action>
+            </block>
+        </reference>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </faq_index>
+
+    <faq_index_index translate="label">
+        <update handle="faq_index"/>
+        <reference name="content">
+            <block type="faq/items" name="faq_items" template="faq/items.phtml" />
+        </reference>
+    </faq_index_index>
+
+    <faq_index_detail translate="label">
+        <update handle="faq_index"/>
+        <reference name="content">
+            <block type="faq/items_detail" name="faq_items_detail" template="faq/items/detail.phtml" />
+        </reference>
+    </faq_index_detail>
+</layout>

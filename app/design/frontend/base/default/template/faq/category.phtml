@@ -1,0 +1,24 @@
+<?php $categories = $this->getCollection() ?>
+<?php $currentCategory = $this->getCurrentCategory() ?>
+<?php if(count($categories)): ?>
+<?php foreach($categories[IssohSystems_Faq_Model_Category::PARENT_CATEGORY_ID] as $category): ?>
+    <div class="block block-faq-category">
+        <div class="block-title">
+            <strong><i class="fa <?php echo $category->getIconClass() ?>" aria-hidden="true" style="color:#<?php echo $category->getIconColor()?>"></i>&nbsp; <?php echo $category->getName() ?></strong>
+        </div>
+        <div class="block-content">
+            <?php if(isset($categories[$category->getId()])): ?>
+            <ul>
+                <?php foreach($categories[$category->getId()] as $_category): ?>
+                    <li class="<?php if($_category->getId() === $currentCategory->getId()) echo "active" ?>">
+                        <a class="list-group-item" href="<?php echo $this->getUrl('*/index', array('cid' => $_category->getId())) ?>">
+                            <i class="fa <?php echo $_category->getIconClass() ?>" style="color:#<?php echo $_category->getIconColor()?>"></i>&nbsp; <?php echo $_category->getName() ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endforeach; ?>
+<?php endif; ?>

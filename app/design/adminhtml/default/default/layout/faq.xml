@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_faq_items_index>
+        <reference name="content">
+            <block  type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                <action method="setUseConfirm">
+                    <params>0</params>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_faq_items_index>
+
+    <adminhtml_faq_items_edit>
+        <update handle="editor" />
+        <reference name="head">
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+        </reference>
+    </adminhtml_faq_items_edit>
+
+    <adminhtml_faq_category_index>
+        <reference name="head">
+            <action method="addCss"><name>awesome/font-awesome.css</name></action>
+        </reference>
+        <reference name="content">
+            <block  type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                <action method="setUseConfirm">
+                    <params>0</params>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_faq_category_index>
+
+    <adminhtml_faq_category_edit>
+        <reference name="head">
+            <action method="addCss"><name>awesome/font-awesome.css</name></action>
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+            <action method="addJs"><script>jscolor/jscolor.js</script></action>
+        </reference>
+        <update handle="editor"/>
+    </adminhtml_faq_category_edit>
+
+    <adminhtml_faq_items_related>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="issohadmin/faq_items_edit_tab_related" name="related.grid" />
+            <block type="adminhtml/widget_grid_serializer" name="grid_serializer">
+                <reference name="grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>related.grid</grid_block_name>
+                        <data_callback>getRelFaqs</data_callback>
+                        <hidden_input_name>links[related_faq]</hidden_input_name>
+                        <reload_param_name>related_faq</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </adminhtml_faq_items_related>
+
+    <adminhtml_faq_items_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="issohadmin/faq_items_edit_tab_related" name="related.grid"/>
+        </block>
+    </adminhtml_faq_items_grid>
+</layout>

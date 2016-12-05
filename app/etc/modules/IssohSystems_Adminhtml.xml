@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <IssohSystems_Adminhtml>
+            <active>true</active>
+            <codePool>local</codePool>
+        </IssohSystems_Adminhtml>
+    </modules>
+</config>

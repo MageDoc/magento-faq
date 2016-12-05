@@ -1,0 +1,113 @@
+<style>
+.label_icon:hover {
+    font-size:20px;
+    background-color: #1D9D74;
+}
+</style>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('FAQ Category') ?></h4>
+</div>
+
+<?php $category = $this->getCategory(); ?>
+<input type="hidden" name="store_id" value="<?php echo $category->getStoreId() ? $category->getStoreId() : 0 ?>">
+<div id="faq_category_form" class="fieldset">
+    <div class="hor-scroll">
+        <table cellspacing="0" class="form-list">
+            <tr>
+                <td class="label"><label for="name"><?php echo $this->__('Name') ?><span class="required">*</span></label></td>
+                <td class="value" id="category_name">
+                    <input type="text" class="required-entry input-text" value="<?php echo $this->escapeHtml($category->getName()) ?>" name="name" id="name">
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><label for="sort_order"><?php echo $this->__('Sort Order') ?><span class="required">*</span></label></td>
+                <td class="value">
+                    <input type="text" class="required-entry input-text alidate-greater-than-zero" value="<?php echo $category->getSortOrder() ?>" name="sort_order" id="sort_order">
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><label for="parent"><?php echo $this->__('Parent') ?><span class="required">*</span></label></td>
+                <td class="value"><?php echo $this->getParentHtml() ?></td>
+            </tr>
+            <tr>
+                <td class="label"><label for="active"><?php echo $this->__('Active') ?><span class="required">*</span></label></td>
+                <td class="value"><?php echo $this->getActiveHtml() ?></td>
+            </tr>
+            <tr>
+                <td class="label"><label for="icon_color"><?php echo $this->__('Icon Color') ?><span class="required">*</span></label></td>
+                <td class="value"><input type="text" class="required-entry input-text color" value="<?php echo $this->escapeHtml($category->getIconColor()) ?>" name="icon_color" id="icon_color"></td>
+            </tr>
+            <tr>
+                <td class="label"><label for="icon_class"><?php echo $this->__('Icon') ?><span class="required">*</span></label></td>
+                <td class="value" style="width:100%">
+                    <?php $icons = Mage::helper('faq')->getFontAawesome() ?>
+                    <?php foreach ($icons as $icon_class => $icon_value ):?>
+                        <label class="label_icon">
+                            <input type="radio" class="validate-one-required-by-name" name="icon_class" <?php if($icon_class == $category->getIconClass()) echo 'checked="checked"'?> value="<?php echo $icon_class?>">
+                            <i class="fa <?php echo $icon_class?>"></i>
+                        </label>
+                    <?php endforeach; ?>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $j(function(){
+        $j('input[type="radio"][name="icon_class"]').click(function(){
+            icon_changed($j(this));
+        });
+        $j('input[type="radio"][name="icon_class"]:checked').click();
+
+        $j('#icon_color').change(function(){
+            if ($j('#category_name i.fa').length) {
+                $j('#category_name i.fa').css('color', '#' + $j(this).val());
+            }
+        });
+
+        <?php if(!$category->getId()): ?>
+            parent_changed($j('#parent').val());
+
+            $j('#parent').change(function(){
+                parent_changed($j(this).val());
+            });
+        <?php endif; ?>
+    });
+
+    function icon_changed(obj) {
+        $j('#category_name i.fa').remove();
+        $j('#category_name').prepend('<i class="fa fa-2x ' + obj.val()  + '"></i>');
+        if ($j('#icon_color').length) {
+            $j('#category_name i.fa').css('color', '#' + $j('#icon_color').val());
+
+            $j('.label_icon i').each(function(){
+                $j(this).css('color', '');
+                $j(this).css('font-size', '');
+            });
+
+            var checked_class = $j('input[type="radio"][name="icon_class"]:checked').val();
+            $j('.label_icon i.' + checked_class).css('color', '#' + $j('#icon_color').val());
+            $j('.label_icon i.' + checked_class).css('font-size', '20px');
+        }
+    }
+
+    function parent_changed(value) {
+         var data = {'form_key': $j('input[name=form_key]').val(), 'parent': value};
+        var url = '<?php echo $this->getUrl('*/*/sortorder') ?>';
+        url = url + (url.match(new RegExp('\\?')) ? '&isAjax=true' : '?isAjax=true');
+        $j.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: url,
+            data: data,
+            success: function(response){
+                if (response['sort_order'] !== 'undefined') {
+                    $j('#sort_order').val(response['sort_order']);
+                }
+            }
+         });
+    }
+</script>

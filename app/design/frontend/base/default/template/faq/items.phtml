@@ -1,0 +1,48 @@
+<div class="page-title">
+    <h1><?php echo $this->__('FAQ') ?></1>
+</div>
+
+<?php $category = $this->getCategory() ?>
+<div id="faq-search">
+    <form method="get" action="<?php echo $this->getUrl('faq/index')?>" id="search_faq_form">
+        <div class="input-box">
+            <label for="search"></label>
+            <input type="search" placeholder="<?php echo $this->__('Search entire store here...') ?>" maxlength="128" class="input-text required-entry" value="<?php echo $this->escapeHtml($this->getKeyword()) ?>" name="q" id="search_faq">
+            <button class="button search-button" title="<?php echo $this->__('Search') ?>" type="submit"><span><span><?php echo $this->__('Search') ?></span></span></button>
+        </div>
+        <div class="clearfix"></div>
+        <script type="text/javascript">
+            var searchForm = new Varien.searchForm('search_faq_form', 'search_faq', '');
+        </script>
+    </form>
+</div>
+
+<?php $iconColor = 'ff6c00'; ?>
+<div class="faq-list">
+    <div class="page-subtitle">
+        <?php if($category->getId()): ?>
+            <?php $iconColor = $category->getIconColor(); ?>
+            <i class="fa <?php echo $category->getIconClass() ?>" aria-hidden="true" style="color:#<?php echo $category->getIconColor()?>"></i>&nbsp; <?php echo $category->getName() ?>
+        <?php else: ?>
+            <i class="fa fa-search" aria-hidden="true" style="color:#<?php echo $iconColor ?>"></i>&nbsp; <?php echo $this->escapeHtml($this->getKeyword() ? $this->getKeyword(): $this->__('FAQ')); ?>
+        <?php endif; ?>
+    </div>
+
+    <?php echo $this->getPagerHtml(); ?>
+    <div class="clearfix faq-content">
+        <?php foreach($this->getCollection() as $_item): ?>
+            <div class="faq-row">
+                <i class="fa fa-caret-right" style="color:#<?php echo $iconColor; ?>"></i>
+                <a href="<?php echo $this->getUrl('faq/index/detail', array('cid' => $_item->getCategoryId(), 'id' => $_item->getId())) ?>">
+                    <span><?php echo $this->escapeHtml($_item->getQuestion()) ?></span>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div style="text-align:right; margin-top:20px;">
+        <a href="<?php echo $this->getUrl('*/index') ?>">
+            <i class="fa fa-arrow-right" aria-hidden="true" style="color:#<?php echo $iconColor ?>"></i> <?php echo $this->__('FAQ') ?>
+        </a>
+    </div>
+</div>
