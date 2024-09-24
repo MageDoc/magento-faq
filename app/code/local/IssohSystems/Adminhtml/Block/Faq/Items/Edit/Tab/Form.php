@@ -3,19 +3,51 @@
 class IssohSystems_Adminhtml_Block_Faq_Items_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm() {
-        $form = new Varien_Data_Form();
+        $form = Mage::helper('faq')->isModuleEnabled('MageDoc_System')
+            ? new MageDoc_System_Block_Adminhtml_Form_Extended()
+            : new Varien_Data_Form();
         $this->setForm($form);
         $fieldset = $form->addFieldset('faq_form', array('legend' => Mage::helper('faq')->__('FAQ')));
 
         $store = Mage::registry('store_id');
         $model = Mage::registry('current_faq');
 
-        $fieldset->addField('category_id', 'select', array(
-            'name'      => 'category_id',
-            'label'     => Mage::helper('faq')->__('Category'),
-            'required'  => true,
-            'values'    => $this->toCategoryOptionArray(),
-        ));
+        $faqData = array();
+        if (Mage::getSingleton('adminhtml/session')->getFaqData()) {
+            $faqData = Mage::getSingleton('adminhtml/session')->getFaqData();
+            Mage::getSingleton('adminhtml/session')->setFaqData(null);
+        } elseif (Mage::registry('current_faq')) {
+            if (is_null(Mage::registry('current_faq')->getActive())) {
+                Mage::registry('current_faq')->setData('active', IssohSystems_Faq_Model_Entity::ACTIVE_TRUE);
+            }
+            $faqData = Mage::registry('current_faq')->getData();
+        }
+
+        if (Mage::helper('faq')->isModuleEnabled('Testimonial_MageDoc')) {
+            $form->addType('combobox', 'MageDoc_System_Block_Adminhtml_Form_Element_Combobox');
+            $categoryId = isset($faqData['category_id'])
+                ? $faqData['category_id']
+                : null;
+            $fieldset->addField('category_id', 'combobox', array(
+                'label'     => Mage::helper('faq')->__('Category'),
+                'title'     => Mage::helper('faq')->__('Category'),
+                'name'      => 'category_id',
+                'value'     => $categoryId,
+                'options'   => array(),
+                'class'     => 'required-entry',
+                'source_url'=> $this->getUrl('magedoc/adminhtml_category/list'),
+                'settings'  => array(
+                    'isAjax'   => true
+                )
+            ));
+        } else {
+            $fieldset->addField('category_id', 'select', array(
+                'name'      => 'category_id',
+                'label'     => Mage::helper('faq')->__('Category'),
+                'required'  => true,
+                'values'    => $this->toCategoryOptionArray(),
+            ));
+        }
 
         $fieldset->addField('active', 'radios', array(
             'label'    => Mage::helper('faq')->__('Active'),
@@ -54,15 +86,9 @@ class IssohSystems_Adminhtml_Block_Faq_Items_Edit_Tab_Form extends Mage_Adminhtm
             'name'     => 'store_id'
         ));
 
-        if (Mage::getSingleton('adminhtml/session')->getFaqData()) {
-            $form->setValues(Mage::getSingleton('adminhtml/session')->getFaqData());
-            Mage::getSingleton('adminhtml/session')->setFaqData(null);
-        } elseif (Mage::registry('current_faq')) {
-            if (is_null(Mage::registry('current_faq')->getActive())) {
-                Mage::registry('current_faq')->setData('active', IssohSystems_Faq_Model_Entity::ACTIVE_TRUE);
-            }
-            $form->setValues(Mage::registry('current_faq')->getData());
-        }
+        Mage::dispatchEvent('faq_item_edit_prepare_form', array('form' => $form));
+
+        $form->setValues($faqData);
     }
 
     protected function toCategoryOptionArray() {

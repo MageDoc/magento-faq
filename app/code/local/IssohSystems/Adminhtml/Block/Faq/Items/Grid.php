@@ -25,6 +25,8 @@ class IssohSystems_Adminhtml_Block_Faq_Items_Grid extends Mage_Adminhtml_Block_W
         $collection->setOrder('main_table.category_id', 'asc');
         $collection->setOrder('main_table.sort_order', 'asc');
 
+        Mage::dispatchEvent('faq_item_grid_prepare_collection', array('grid' => $this, 'items' => $collection));
+
         $this->setCollection($collection);
         $this->setSaveParametersInSession(true);
 
@@ -104,6 +106,8 @@ class IssohSystems_Adminhtml_Block_Faq_Items_Grid extends Mage_Adminhtml_Block_W
                 'index'     => 'stores',
                 'is_system' => true,
         ));
+
+        Mage::dispatchEvent('faq_item_grid_prepare_columns', array('grid' => $this));
 
         return parent::_prepareColumns();
     }

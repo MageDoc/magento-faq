@@ -20,7 +20,7 @@
 
     <adminhtml_faq_category_index>
         <reference name="head">
-            <action method="addCss"><name>awesome/font-awesome.css</name></action>
+            <action method="addCss"><name>faq/awesome/font-awesome.css</name></action>
         </reference>
         <reference name="content">
             <block  type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
@@ -33,7 +33,7 @@
 
     <adminhtml_faq_category_edit>
         <reference name="head">
-            <action method="addCss"><name>awesome/font-awesome.css</name></action>
+            <action method="addCss"><name>faq/awesome/font-awesome.css</name></action>
             <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
             <action method="addJs"><script>jscolor/jscolor.js</script></action>

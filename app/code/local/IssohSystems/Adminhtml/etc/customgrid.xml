@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<customgrid>
+    <grid_types>
+        <issohadmin_faq_items_grid type="issohadmin/grid_type_faq" module="faq">
+            <name>Faq Items</name>
+            <sort_order>9100</sort_order>
+        </issohadmin_faq_items_grid>
+    </grid_types>
+</customgrid>

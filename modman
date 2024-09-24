@@ -1,0 +1,10 @@
+app/code/local/IssohSystems/Adminhtml app/code/local/IssohSystems/Adminhtml
+app/code/local/IssohSystems/Faq app/code/local/IssohSystems/Faq
+app/etc/modules/IssohSystems_Adminhtml.xml app/etc/modules/IssohSystems_Adminhtml.xml
+app/etc/modules/IssohSystems_Faq.xml app/etc/modules/IssohSystems_Faq.xml
+app/design/adminhtml/default/default/layout/faq.xml app/design/adminhtml/default/default/layout/faq.xml
+app/design/adminhtml/default/default/template/faq app/design/adminhtml/default/default/template/faq
+app/design/frontend/base/default/layout/faq.xml app/design/frontend/base/default/layout/faq.xml
+app/design/frontend/base/default/template/faq app/design/frontend/base/default/template/faq
+skin/adminhtml/default/default/faq skin/adminhtml/default/default/faq
+skin/frontend/base/default/faq skin/frontend/base/default/faq

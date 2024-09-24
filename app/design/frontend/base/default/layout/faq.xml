@@ -5,8 +5,8 @@
         <remove name="right"/>
 
         <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>css/font-awesome.css</name><params/></action>
-            <action method="addItem"><type>skin_css</type><name>css/styles-faq.css</name><params/></action>
+            <action method="addItem"><type>skin_css</type><name>css/faq/font-awesome.css</name><params/></action>
+            <action method="addItem"><type>skin_css</type><name>css/faq/styles-faq.css</name><params/></action>
         </reference>
 
         <reference name="left">

@@ -96,7 +96,9 @@ class IssohSystems_Adminhtml_Block_Faq_Items_Edit_Tab_Related extends Mage_Admin
                                                   ->getFirstItem()
                                                   ->getData();
 
-        $sel_faqs = explode(",", $related_faqs['related_faq']);
+        $sel_faqs = $related_faqs
+            ? explode(",", $related_faqs['related_faq'])
+            : array();
         if (!is_null($faqs)) {
             $sel_faqs = array_merge($faqs, $sel_faqs);
         }

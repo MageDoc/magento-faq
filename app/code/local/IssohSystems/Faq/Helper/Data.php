@@ -24,7 +24,7 @@ class IssohSystems_Faq_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getFontAawesome(){
         $pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"\\\\(.+)";\s+}/';
-        $fontPath = Mage::getBaseDir('skin'). DS. 'frontend'. DS. 'base'. DS. 'default'. DS. 'css'. DS. 'font-awesome.css';
+        $fontPath = Mage::getBaseDir('skin'). DS. 'frontend'. DS. 'base'. DS. 'default'. DS. 'faq'. DS. 'css'. DS. 'font-awesome.css';
 
         $subject =  file_get_contents($fontPath);
         preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);

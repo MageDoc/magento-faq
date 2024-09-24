@@ -100,7 +100,7 @@ class IssohSystems_Adminhtml_Faq_ItemsController extends Mage_Adminhtml_Controll
                 $data['faq_id'] = $faq_id;
                 $data['store_id'] = intval($data['store_id']);
 
-                if (is_array($data['related_faq'])) {
+                if (isset($data['related_faq']) && is_array($data['related_faq'])) {
                     $data['related_faq'] = implode(",", array_unique($data['related_faq']));
                 }
 
@@ -203,7 +203,9 @@ class IssohSystems_Adminhtml_Faq_ItemsController extends Mage_Adminhtml_Controll
         $text_data->setCategoryId($data['category_id']);
         $text_data->setQuestion($data['question']);
         $text_data->setAnswer($data['answer']);
-        $text_data->setRelatedFaq($data['related_faq']);
+        if (isset($data['related_faq'])){
+            $text_data->setRelatedFaq($data['related_faq']);
+        }
         return $text_data;
     }
 

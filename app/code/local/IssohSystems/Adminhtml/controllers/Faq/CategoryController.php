@@ -32,19 +32,22 @@ class IssohSystems_Adminhtml_Faq_CategoryController extends Mage_Adminhtml_Contr
 
         $store = $this->getRequest()->getParam('store', 0);
         $id = $this->getRequest()->getParam('id');
+        $model = Mage::getModel('faq/category');
 
         if ($id) {
             $collection = Mage::getModel('faq/category')->getCollection()->addFieldToFilter('main_table.category_id', $id);
             $collection->getSelect()->joinLeft(array('data'=> 'faq_category_data'), 'data.category_id = main_table.category_id AND data.store_id='. $store, array('name', 'store_id'));
-            $model = $collection->getFirstItem();
-            if ($model && $model->getId()){
-                $model =  $model->setActive($model->getActive())
-                                ->setName($model->getName())
-                                ->setParent($model->getParent());
+            if ($_model = $collection->getFirstItem()){
+                $model = $_model;
             }
         }
+        if ($model->getId()){
+            $model =  $model->setActive($model->getActive())
+                ->setName($model->getName())
+                ->setParent($model->getParent());
+        }
 
-        if (($model && $model->getId()) || Mage::registry('faq_new_action') || is_null($id)){
+        if ($model->getId() || Mage::registry('faq_new_action') || is_null($id)) {
             $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
             if (!empty($data)) {
                 $model->setData($data);
