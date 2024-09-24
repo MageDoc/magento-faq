@@ -22,17 +22,17 @@
         <resources>
             <admin>
                 <children>
-                    <system>
+                    <faq translate="title" module="faq">
+                        <title>FAQ</title>
                         <children>
-                            <config>
-                                <children>
-                                    <faq translate="title" module="faq">
-                                        <title>Manage FAQ</title>
-                                    </faq>
-                                </children>
-                            </config>
+                            <items translate="title" module="faq">
+                                <title>Manage FAQs</title>
+                            </items>
+                            <category translate="title" module="faq">
+                                <title>Manage FAQ Categories</title>
+                            </category>
                         </children>
-                    </system>
+                    </faq>
                 </children>
             </admin>
         </resources>

@@ -24,7 +24,7 @@ class IssohSystems_Adminhtml_Model_Grid_Type_Faq
     public function checkUserEditPermissions($type, $model, $block=null, $params=array())
     {
         if (parent::checkUserEditPermissions($type, $model, $block, $params)) {
-            return Mage::getSingleton('admin/session')->isAllowed('admin/system/config/faq');
+            return Mage::getSingleton('admin/session')->isAllowed('admin/faq/items');
         }
         return false;
     }
