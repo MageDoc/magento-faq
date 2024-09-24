@@ -1,7 +1,7 @@
 <config>
     <modules>
         <IssohSystems_Faq>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </IssohSystems_Faq>
     </modules>
     <global>

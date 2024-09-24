@@ -69,6 +69,7 @@ class IssohSystems_Adminhtml_Block_Faq_Items_Grid extends Mage_Adminhtml_Block_W
             'header'        => Mage::helper('faq')->__('Active'),
             'width'         => '70px',
             'index'         => 'active',
+            'filter_index'  => 'main_table.active',
             'type'          => 'options',
             'options'       => Mage::helper('faq')->getActiveOptionArray(),
         ));
