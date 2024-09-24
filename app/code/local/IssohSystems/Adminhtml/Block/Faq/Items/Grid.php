@@ -117,7 +117,7 @@ class IssohSystems_Adminhtml_Block_Faq_Items_Grid extends Mage_Adminhtml_Block_W
     {
         $url = $this->getUrl('*/faq_items/edit', array('id' => $row->getId(),'store'=>$this->getRequest()->getParam('store', 0)));
 
-        return $url;
+        return false;
     }
 
     protected function _getStore()
